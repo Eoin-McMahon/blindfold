@@ -10,7 +10,12 @@ This project makes use of gitignore.io and provides a cli to generate gitignore 
 #### Examples:
 ```bash
 # generates a single gitignore file for both dart and flutter in ./src/.gitignore
-$ blindfold --lang dart flutter --dest ./src/
+$ blindfold --lang dart flutter
+```
+
+```bash
+# you can specify a speciic destination to store the gitignore file using the dest argument
+$ blindfold --lang rust --dest ./src/
 ```
 
 ```bash
@@ -19,7 +24,15 @@ $ blindfold list
 ```
 
 #### Installation
-* Rust is a prerequisite
-* clone the repository
-* run cargo build
-* executable stored in blindfold/target/debug/blindfold
+
+NOTE: Rust must be installed on your system for this to work. 
+
+1. Clone the repository and cd into it
+2. Once in the top level directory of the repo run the command:
+
+```bash
+$ cargo install --path ./
+```
+
+This will install the binary and add it to your path. Once installed you can use the tool as shown in the examples above.
+
