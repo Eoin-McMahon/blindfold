@@ -9,7 +9,7 @@ struct FileRes {
 }
 
 fn build_file_map(res: &str) -> HashMap<String, Option<String>> {
-    // parse json response to extract name and download link
+    // parse json response to extract name and download link into FileRes struct
     let all_files: Vec<FileRes> = serde_json::from_str(res).unwrap();
 
     // filter out non-gitignore files
@@ -37,7 +37,7 @@ fn destructure_to_tup(file_struct: &FileRes) -> (String, Option<String>) {
     // format name to be language name lowercased
     let name:String = file_struct.name
         .clone()
-        .replace("gitignore", "")
+        .replace(".gitignore", "")
         .to_lowercase();
     
     let url:Option<String> = file_struct.download_url
@@ -60,10 +60,23 @@ fn http_get(url: &str) -> String {
 
 fn main() {
     // github api get request to list the gitignore repository files
-    let repo_contents: String = http_get("https://api.github.com/repos/github/gitignore/contents");
-
+    let repo_contents: String = http_get("https://api.github.com/repos/toptal/gitignore/contents/templates?ref=master");
     let file_map: HashMap<String, Option<String>> = build_file_map(&repo_contents);
 
-    println!("{:?}", file_map)
+    let lang: String = String::from("angular");
+
+    let file_to_get: Option<&Option<String>> = file_map.get(&lang);
+
+    let mut gitignore = String::from("");
+    
+    // TODO:: Clean this up, its horrible
+    if let Some(file) = file_to_get {
+        gitignore.push_str(&http_get(&file.clone().unwrap()));
+    }
+    else {
+        println!("No valid url to request!");
+    }
+
+    println!("{}", gitignore)
 
 }
