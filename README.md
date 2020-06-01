@@ -1,9 +1,9 @@
-# IgnoriGen
+# IgnoriGen - a lightweight and simple .gitignore generator
 
 <p align="center">
 <img height="588" width="695" src="./blindfolded_github.png">
   <br>
-logo courtesy of dominic houston watt
+Logo courtesy of [Dominic Houston-Watt](https://www.instagram.com/do.graphics/)
 </p>
 
 A simple and lightweight gitignore file generator written in rust!
