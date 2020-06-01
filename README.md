@@ -1,8 +1,8 @@
-# IgnoriGen - a lightweight and simple .gitignore generator
-
 <p align="center">
 <img height="588" width="695" src="./blindfolded_github.png">
   <br>
+
+# IgnoriGen - a lightweight and simple .gitignore generator
 Logo courtesy of [Dominic Houston-Watt](https://www.instagram.com/do.graphics/)
 </p>
 
