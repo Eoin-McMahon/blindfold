@@ -1,5 +1,5 @@
 [package]
-name = "ignorigen"
+name = "blindfold"
 version = "0.1.0"
 authors = ["Eóin McMahon <eoin.mcmahon.dev@gmail.com>"]
 edition = "2018"

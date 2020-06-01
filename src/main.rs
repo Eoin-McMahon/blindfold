@@ -9,7 +9,7 @@ use std::collections::HashMap;
 const API_URL: &str = "https://api.github.com/repos/toptal/gitignore/contents/templates?ref=master";
 
 fn main() -> std::io::Result<()> {
-    let matches = App::new("IgnoriGen")
+    let matches = App::new("Blindfold")
                     .version("1.0")
                     .author("Eoin McMahon <eoin.mcmahon.dev@gmail.com>")
                     .about("Grabs gitignore templates from gitignore.io")
