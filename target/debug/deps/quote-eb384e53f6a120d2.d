@@ -1,0 +1,13 @@
+/Users/eoin/Code/ignorigen/target/debug/deps/quote-eb384e53f6a120d2.rmeta: /Users/eoin/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.6/src/lib.rs /Users/eoin/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.6/src/ext.rs /Users/eoin/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.6/src/format.rs /Users/eoin/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.6/src/ident_fragment.rs /Users/eoin/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.6/src/to_tokens.rs /Users/eoin/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.6/src/runtime.rs /Users/eoin/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.6/src/spanned.rs
+
+/Users/eoin/Code/ignorigen/target/debug/deps/libquote-eb384e53f6a120d2.rlib: /Users/eoin/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.6/src/lib.rs /Users/eoin/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.6/src/ext.rs /Users/eoin/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.6/src/format.rs /Users/eoin/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.6/src/ident_fragment.rs /Users/eoin/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.6/src/to_tokens.rs /Users/eoin/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.6/src/runtime.rs /Users/eoin/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.6/src/spanned.rs
+
+/Users/eoin/Code/ignorigen/target/debug/deps/quote-eb384e53f6a120d2.d: /Users/eoin/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.6/src/lib.rs /Users/eoin/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.6/src/ext.rs /Users/eoin/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.6/src/format.rs /Users/eoin/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.6/src/ident_fragment.rs /Users/eoin/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.6/src/to_tokens.rs /Users/eoin/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.6/src/runtime.rs /Users/eoin/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.6/src/spanned.rs
+
+/Users/eoin/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.6/src/lib.rs:
+/Users/eoin/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.6/src/ext.rs:
+/Users/eoin/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.6/src/format.rs:
+/Users/eoin/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.6/src/ident_fragment.rs:
+/Users/eoin/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.6/src/to_tokens.rs:
+/Users/eoin/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.6/src/runtime.rs:
+/Users/eoin/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.6/src/spanned.rs:
