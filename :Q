@@ -12,7 +12,7 @@ struct FileRes {
     download_url: Option<String>,
 }
 
-fn build_file_map(res: &str) -> HashMap<String, String> { 
+fn build_file_map(res: &str) -> HashMap<String, Option<String>> {
     // parse json response to extract name and download link into FileRes struct
     let all_files: Vec<FileRes> = serde_json::from_str(res).unwrap();
 
@@ -23,13 +23,13 @@ fn build_file_map(res: &str) -> HashMap<String, String> {
         .collect();
 
     // destructure vec of struct to vec of tuples in form (name, url)
-    let destructured: Vec<(String, String)> = gitignore_files
+    let destructured: Vec<(String, Option<String>)> = gitignore_files
         .iter()
         .map(|file| destructure_to_tup(file))
         .collect();
 
     // collect vector of tuples into a hashmap
-    let file_map: HashMap<String, String> = destructured
+    let file_map: HashMap<String, Option<String>> = destructured
         .into_iter()
         .collect();
 
@@ -37,21 +37,17 @@ fn build_file_map(res: &str) -> HashMap<String, String> {
 }
 
 // destructure FileRes struct to a tuple of its fields
-fn destructure_to_tup(file_struct: &FileRes) -> (String, String) {
+fn destructure_to_tup(file_struct: &FileRes) -> (String, Option<String>) {
     // format name to be language name lowercased
     let name:String = file_struct.name
         .clone()
         .replace(".gitignore", "")
         .to_lowercase();
     
+    let url:Option<String> = file_struct.download_url
+        .clone();
 
-    let mut url:String = String::from("");
-
-    if let Some(download_url) = &file_struct.download_url  {
-        url.push_str(download_url);
-    }
-
-    let tuple: (String, String) = (name, url);
+    let tuple: (String, Option<String>) = (name, url);
 
     return tuple;
 }
@@ -66,40 +62,33 @@ fn http_get(url: &str) -> String {
     return response;
 }
 
-// make http get request for the specified template and return it as a string
-fn get_ignore_file(file_map: &HashMap<String, String>, lang: &str) -> String {
-    let mut response: String = String::from("");
-    let file_url: Option<&String> = file_map.get(lang);
-    
-    if let Some(file) = file_url {
-        response.push_str(&http_get(&file));
-    }
-
-    return response;
-}
-
-
 fn main() {
     // collect command line arguments
     let args: Vec<String> = env::args().collect();
 
-    // perform a get request to list the gitignore repository files
-    let repo_contents: String = http_get(API_URL);
-    let file_map: HashMap<String, String> = build_file_map(&repo_contents);
-
-
     // ignore first argument
     for language in args[1..].iter() {
         println!("Language requested: {}", language);    
-        let ignore_file: String = get_ignore_file(&file_map, language);
-        println!("{}", ignore_file);
     }
     
+    // get request to list the gitignore repository files
+    let repo_contents: String = http_get(API_URL);
+    let file_map: HashMap<String, Option<String>> = build_file_map(&repo_contents);
 
-    // get gitinore template for language
-    //let language: &str = "angular";
-    //let ignore_file: String = get_ignore_file(&file_map, language);
+    let lang: String = String::from("angular");
 
-    //println!("{:?}", ignore_file);
+    let file_to_get: Option<&Option<String>> = file_map.get(&lang);
+
+    let mut gitignore = String::from("");
+    
+    // TODO Clean this up, its horrible
+    if let Some(file) = file_to_get {
+        gitignore.push_str(&http_get(&file.clone().unwrap()));
+    }
+    else {
+        println!("No valid url to request!");
+    }
+
+    println!("{}", gitignore)
 
 }
