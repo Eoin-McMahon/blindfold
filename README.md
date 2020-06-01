@@ -7,6 +7,19 @@ Logo courtesy of [Dominic Houston-Watt](https://www.instagram.com/do.graphics/)
 
 This project makes use of gitignore.io and provides a cli to generate gitignore templates for any language of your chosing!
 
+#### Examples:
 ```bash
+# generates a single gitignore file for both dart and flutter in ./src/.gitignore
 $ ignorigen --lang dart flutter --dest ./src/
 ```
+
+```bash
+# shows full list of available templates
+$ ignorigen list
+```
+
+#### Installation
+* Rust is a prerequisite
+* clone the repository
+* run cargo build
+* executable stored in IgnoriGen/target/debug/ignorigen
