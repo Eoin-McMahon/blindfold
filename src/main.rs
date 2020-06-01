@@ -9,8 +9,6 @@ struct FileRes {
 }
 
 fn build_file_map(res: &str) -> HashMap<String, Option<String>> {
-    let mut file_map: HashMap<String, Option<String>> = HashMap::new();
-
     // parse json response to extract name and download link
     let all_files: Vec<FileRes> = serde_json::from_str(res).unwrap();
 
@@ -20,13 +18,34 @@ fn build_file_map(res: &str) -> HashMap<String, Option<String>> {
         .filter(|file| file.name.contains("gitignore"))
         .collect();
 
-    // Insert name and url into hashmap
-    for file in gitignore_files {
-        let name = file.name.clone().replace(".gitignore", "");
-      file_map.insert(name, file.download_url.clone());
-    }
+    // destructure vec of struct to vec of tuples in form (name, url)
+    let destructured: Vec<(String, Option<String>)>= gitignore_files
+        .iter()
+        .map(|file| destructure_to_tup(file))
+        .collect();
+
+    // collect vector of tuples into a hashmap
+    let file_map: HashMap<String, Option<String>> = destructured
+        .into_iter()
+        .collect();
 
     return file_map;
+}
+
+// destructure FileRes struct to a tuple of its fields
+fn destructure_to_tup(file_struct: &FileRes) -> (String, Option<String>) {
+    // format name to be language name lowercased
+    let name:String = file_struct.name
+        .clone()
+        .replace("gitignore", "")
+        .to_lowercase();
+    
+    let url:Option<String> = file_struct.download_url
+        .clone();
+
+    let tuple: (String, Option<String>) = (name, url);
+
+    return tuple;
 }
 
 // performs a http GET request using the reqwest crate
@@ -46,4 +65,5 @@ fn main() {
     let file_map: HashMap<String, Option<String>> = build_file_map(&repo_contents);
 
     println!("{:?}", file_map)
+
 }
