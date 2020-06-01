@@ -1,3 +1,6 @@
+use std::path::{Path, PathBuf};
+use std::fs::File;
+use std::io::prelude::*;
 use clap::{Arg, App};
 mod lib;
 use std::collections::HashMap;
@@ -5,7 +8,7 @@ use std::collections::HashMap;
 // api end point for the gitignore templates repository
 const API_URL: &str = "https://api.github.com/repos/toptal/gitignore/contents/templates?ref=master";
 
-fn main() {
+fn main() -> std::io::Result<()> {
     let matches = App::new("IgnoriGen")
                     .version("1.0")
                     .author("Eoin McMahon <eoin.mcmahon.dev@gmail.com>")
@@ -36,15 +39,21 @@ fn main() {
 
     let mut gitignore_template: String = String::new();
 
-    // ignore first argument
     for language in languages.iter() {
-        // get gitignore template for each CLA
+        // get gitignore template for each language and push to one 'mega-gitignore'
         let ignore_body: String = lib::get_ignore_file(&file_map, language);
-        let ignore_template: String = format!("{} gitignore \n=================== \n\n {} \n\n", language.to_uppercase(), ignore_body);
+        let ignore_template: String = format!("{} gitignore \n\n {} \n\n", language.to_uppercase(), ignore_body);
         gitignore_template.push_str(&ignore_template);
     }
 
-    println!("{}", gitignore_template);
+    // path to the gitignore file to be generated
+    let filepath: PathBuf = Path::new(destination).join(".gitignore");
+    
+    // create and write to file
+    let mut file = File::create(filepath)?;
+    file.write_all(gitignore_template.as_bytes())?;
 
-
+    println!(".gitignore file generated!!");
+    
+    return Ok(());
 }
