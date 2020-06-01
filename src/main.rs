@@ -87,19 +87,11 @@ fn main() {
     let repo_contents: String = http_get(API_URL);
     let file_map: HashMap<String, String> = build_file_map(&repo_contents);
 
-
     // ignore first argument
     for language in args[1..].iter() {
+        // get gitignore template for each CLA
         println!("Language requested: {}", language);    
         let ignore_file: String = get_ignore_file(&file_map, language);
         println!("{}", ignore_file);
     }
-    
-
-    // get gitinore template for language
-    //let language: &str = "angular";
-    //let ignore_file: String = get_ignore_file(&file_map, language);
-
-    //println!("{:?}", ignore_file);
-
 }
