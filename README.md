@@ -1,6 +1,6 @@
 <h1 align="center"> Blindfold - a lightweight and simple .gitignore generator</h1>
 <p align="center">
-<img height="325" width="333" src="./blindfolded_github.png">
+<img height="325" width="333" src="./logo.png">
 <br>
 Logo courtesy of [Dominic Houston-Watt](https://www.instagram.com/do.graphics/)
 </p>
