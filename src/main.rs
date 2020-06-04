@@ -1,5 +1,4 @@
 use clap::{Arg, App, SubCommand};
-use strsim::normalized_levenshtein;
 use std::collections::HashMap;
 use std::ops::Not;
 use colored::*;
