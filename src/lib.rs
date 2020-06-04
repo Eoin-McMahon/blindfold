@@ -84,9 +84,9 @@ pub fn destructure_to_tup(file_struct: &FileRes) -> (String, String) {
 // performs a http GET request using the reqwest crate
 pub fn http_get(url: &str) -> String {
     let response = reqwest::get(url)
-        .expect("Error getting file")
-        .text()
-        .expect("Could not parse Text");
+    .expect("")
+    .text()
+    .expect("");
 
     return response;
 }

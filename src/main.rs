@@ -27,7 +27,6 @@ fn main() -> std::io::Result<()> {
                         .about("Lists all available gitignore templates"))
                     .get_matches();
 
-    // println!("Looking for available templates... 🔎");
     // perform a get request to list the gitignore repository files
     let repo_contents: String = lib::http_get(API_URL);
     let file_map: HashMap<String, String> = lib::build_file_map(&repo_contents);
@@ -50,7 +49,8 @@ fn main() -> std::io::Result<()> {
     let gitignore: String = lib::generate_gitignore_file(languages, file_map);
 
     // write gitignore to file
-    lib::write_file(destination, gitignore);
+    lib::write_file(destination, gitignore).expect("Couldn't write to file ⚠️ ");
+
     
     return Ok(());
 }
@@ -60,3 +60,4 @@ fn list_templates(file_map: HashMap<String, String>) {
         print!("{} \t", key);
     }
 }
+
