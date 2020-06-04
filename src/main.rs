@@ -1,4 +1,5 @@
 use clap::{Arg, App, SubCommand};
+use strsim::normalized_levenshtein;
 use std::collections::HashMap;
 use std::ops::Not;
 use colored::*;
@@ -46,11 +47,12 @@ fn main() -> std::io::Result<()> {
     // unwrap arguments and generate gitignore
     let destination: &str = matches.value_of("DESTINATION").unwrap_or("./");
     let languages: Vec<&str> = matches.values_of("LANGUAGE(S)").unwrap().collect();
+    
+    // find languages not in filemap return as vec, run similarity metric on each key 
     let gitignore: String = lib::generate_gitignore_file(languages, file_map);
 
     // write gitignore to file
     lib::write_file(destination, gitignore).expect("Couldn't write to file ⚠️ ");
-
     
     return Ok(());
 }
