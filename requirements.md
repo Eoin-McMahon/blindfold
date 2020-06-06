@@ -6,6 +6,7 @@
 - [x] Must have a help flag which lists all available templates
 - [ ] Must show suggestions if an invalid language was passed (i.e Did you mean "flutter"?)
 - [x] Must be symlinked so it can be used in any directory
+- [ ] Must have an append feature
 
 - [ ] Should have a caching option to save templates.
 
