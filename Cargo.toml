@@ -7,10 +7,10 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-reqwest = "0.9.0"
+reqwest = "0.9.0"       # http requests
 serde = {version = "1.0.111", features = ["derive"]}
-serde_json = "1.0.53"
-clap = "2.33.1"
-colored = "1.9"
-strsim = "0.10.0"
+serde_json = "1.0.53"   
+clap = "2.33.1"         # argument parsing
+colored = "1.9"         # color in terminal
+strsim = "0.10.0"       # string similarity metrics
 
