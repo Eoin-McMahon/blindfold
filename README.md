@@ -1,9 +1,10 @@
-<h1 align="center"> Blindfold - a lightweight and simple .gitignore generator</h1>
 <p align="center">
 <img height="325" width="333" src="./assets/logo.png">
 <br>
 Logo courtesy of <a href="https://www.instagram.com/do.graphics/">Dominic Houston-Watt</a>
 </p>
+<h1 align="center"> Blindfold - a lightweight and simple .gitignore generator</h1>
+
 
 This project makes use of gitignore.io and provides a cli to generate gitignore templates for any language of your chosing!
 
