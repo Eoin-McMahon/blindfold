@@ -15,28 +15,28 @@ This project makes use of gitignore.io and provides a cli to generate gitignore 
 
 #### Examples:
 ```console
-# generates a single gitignore file for both dart and flutter in ./src/.gitignore
+// generates a single gitignore file for both dart and flutter in ./src/.gitignore
 foo@bar:~$ blindfold --lang dart flutter
 ```
 
 ```console
-# you can specify a speciic destination to store the gitignore file using the dest argument
+// you can specify a speciic destination to store the gitignore file using the dest argument
 foo@bar:~$ blindfold --lang rust --dest ./src/
 ```
 
 ```console
-# arguments can also be written in shorthand
+// arguments can also be written in shorthand
 foo@bar:~$ blindfold -l rust -d ./src/
 ```
 
 ```console
-# shows full list of available templates
+// shows full list of available templates
 foo@bar:~$ blindfold list
 ```
 
 ```console
-# There is a help screen that can be shown which details the subcommands and arguments to supply to the program
-$ blindfold -h
+// There is a help screen that can be shown which details the subcommands and arguments to supply to the program
+foo@bar:~$ blindfold -h
 ```
 #### Installation
 
