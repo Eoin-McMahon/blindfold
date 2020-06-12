@@ -6,7 +6,7 @@ Logo courtesy of <a href="https://www.instagram.com/do.graphics/">Dominic Housto
 <h1 align="center"> Blindfold - a lightweight and simple .gitignore generator</h1>
 
 
-This project makes use of gitignore.io and provides a cli to generate gitignore templates for any language of your chosing!
+This project makes use of gitignore.io and provides a cli to generate gitignore templates for any language of your choosing!
 
 #### Demo:
 
@@ -14,30 +14,42 @@ This project makes use of gitignore.io and provides a cli to generate gitignore 
 
 
 #### Examples:
-```bash
+```console
 # generates a single gitignore file for both dart and flutter in ./src/.gitignore
-$ blindfold --lang dart flutter
+foo@bar:~$ blindfold --lang dart flutter
 ```
 
-```bash
+```console
 # you can specify a speciic destination to store the gitignore file using the dest argument
-$ blindfold --lang rust --dest ./src/
+foo@bar:~$ blindfold --lang rust --dest ./src/
 ```
 
-```bash
+```console
+# arguments can also be written in shorthand
+foo@bar:~$ blindfold -l rust -d ./src/
+```
+
+```console
 # shows full list of available templates
-$ blindfold list
+foo@bar:~$ blindfold list
 ```
 
+```console
+# There is a help screen that can be shown which details the subcommands and arguments to supply to the program
+$ blindfold -h
+```
 #### Installation
 
 NOTE: Rust must be installed on your system for this to work.
+It can be installed easily by running hte following command:
+```console
+foo@bar:~$ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
 
-1. Clone the repository and cd into it
-2. Once in the top level directory of the repo run the command:
-
-```bash
-$ cargo install --path ./
+* Clone the repository and cd into it
+* Once in the top level directory of the repo run the command:
+```console
+foo@bar:~$ cargo install --path ./
 ```
 
 This will install the binary and add it to your path. Once installed you can use the tool as shown in the examples above.
