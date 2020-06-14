@@ -1,5 +1,5 @@
 <p align="center">
-<img height="380" width="1920" src="https://raw.githubusercontent.com/Eoin-McMahon/Blindfold/master/assets/banner.png">
+<img src="https://raw.githubusercontent.com/Eoin-McMahon/Blindfold/master/assets/banner.png" alt="banner" style="width:100%;height:20%;">
 <br>
 Logo courtesy of <a href="https://www.instagram.com/do.graphics/">Dominic Houston-Watt</a>
 </p>
