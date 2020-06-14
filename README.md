@@ -18,13 +18,13 @@ Logo courtesy of <a href="https://www.instagram.com/do.graphics/">Dominic Housto
 ## 📦 Installation
 NOTE: Rust must be installed on your system for this to work. (<a href="https://www.rust-lang.org/learn/get-started">Install Rust</a>)
 
-### Download from crates.io
+#### 📥 Download from crates.io
 
 ```bash
 cargo install blindfold
 ```
 
-### Build from source
+#### 🏗️ Build from source
 * Clone the repository and cd into it
 * Once in the top level directory of the repo run the command:
 ```console
@@ -32,8 +32,7 @@ foo@bar:~$ cargo install --path ./
 ```
 
 This will install the binary and add it to your path. Once installed you can use the tool as shown in the examples below.
-
-## ⚙️ Demo:
+## 🔨 Demo:
 
 ![demo_video](https://raw.githubusercontent.com/Eoin-McMahon/Blindfold/master/assets/demo.gif)
 
