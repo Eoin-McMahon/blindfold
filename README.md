@@ -1,5 +1,5 @@
 <p align="center">
-<img height="380" width="1920" src="https://github.com/Eoin-McMahon/Blindfold/blob/master/assets/banner.png">
+<img height="380" width="1920" src="https://raw.githubusercontent.com/Eoin-McMahon/Blindfold/master/assets/banner.png">
 <br>
 Logo courtesy of <a href="https://www.instagram.com/do.graphics/">Dominic Houston-Watt</a>
 </p>
@@ -12,11 +12,7 @@ Logo courtesy of <a href="https://www.instagram.com/do.graphics/">Dominic Housto
 * Allows for the combination of any number of different templates all into one gitignore
 
 ## 📦 Installation
-NOTE: Rust must be installed on your system for this to work.
-It can be installed easily by running hte following command:
-```console
-foo@bar:~$ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-```
+NOTE: Rust must be installed on your system for this to work. (<a href="https://www.rust-lang.org/tools/install"> Install Rust </a>)
 
 ### Download from crates.io
 
@@ -35,7 +31,7 @@ This will install the binary and add it to your path. Once installed you can use
 
 ## ⚙️ Demo:
 
-![demo_video](https://github.com/Eoin-McMahon/Blindfold/blob/master/assets/demo.gif)
+![demo_video](https://raw.githubusercontent.com/Eoin-McMahon/Blindfold/master/assets/demo.gif)
 
 ## 🔧 Examples of use:
 ```console
@@ -44,7 +40,7 @@ foo@bar:~$ blindfold --lang dart flutter
 ```
 
 ```console
-// you can specify a speciic destination to store the gitignore file using the dest argument
+// you can specify a specific destination to store the gitignore file using the dest argument
 foo@bar:~$ blindfold --lang rust --dest ./src/
 ```
 
