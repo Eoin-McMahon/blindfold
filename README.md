@@ -6,6 +6,7 @@ Logo courtesy of <a href="https://www.instagram.com/do.graphics/">Dominic Housto
 <!-- <h1 align="center"> Blindfold - a lightweight and simple .gitignore generator</h1> -->
 
 [![Crates.io](https://img.shields.io/crates/v/blindfold?color=orange)](https://crates.io/crates/blindfold)
+[![Crates.io](https://img.shields.io/crates/d/blindfold?color=d)](https://crates.io/crates/blindfold)
 [![GitHub license](https://img.shields.io/github/license/Eoin-McMahon/Blindfold)](https://github.com/Eoin-McMahon/Blindfold/blob/master/license.txt)
 [![GitHub stars](https://img.shields.io/github/stars/Eoin-McMahon/Blindfold)](https://github.com/Eoin-McMahon/Blindfold/stargazers)
 
