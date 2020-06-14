@@ -27,8 +27,8 @@ cargo install blindfold
 
 #### 🏗️ Build from source
 ```bash
-git clone https://github.com/Eoin-McMahon/Blindfold.git
-cd Blindfold
+git clone https://github.com/Eoin-McMahon/blindfold.git
+cd blindfold
 cargo install --path ./
 ```
 
