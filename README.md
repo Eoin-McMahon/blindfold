@@ -15,7 +15,7 @@ Logo courtesy of <a href="https://www.instagram.com/do.graphics/">Dominic Housto
 * Allows for the combination of any number of different templates all into one gitignore
 
 ## 📦 Installation
-NOTE: Rust must be installed on your system for this to work. (<a href="https://www.rust-lang.org/tools/install"> Install Rust </a>)
+NOTE: Rust must be installed on your system for this to work. (<a href="https://www.rust-lang.org/learn/get-started">Install Rust</a>)
 
 ### Download from crates.io
 
