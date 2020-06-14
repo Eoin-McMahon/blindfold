@@ -21,7 +21,7 @@ NOTE: Rust must be installed on your system for this to work. (<a href="https://
 ### Download from crates.io
 
 ```bash
-cargo install bliss
+cargo install blindfold
 ```
 
 ### Build from source
