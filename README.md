@@ -26,10 +26,10 @@ cargo install blindfold
 ```
 
 #### 🏗️ Build from source
-* Clone the repository and cd into it
-* Once in the top level directory of the repo run the command:
-```console
-foo@bar:~$ cargo install --path ./
+```bash
+git clone https://github.com/Eoin-McMahon/Blindfold.git
+cd Blindfold
+cargo install --path ./
 ```
 
 This will install the binary and add it to your path. Once installed you can use the tool as shown in the examples below.
@@ -38,27 +38,27 @@ This will install the binary and add it to your path. Once installed you can use
 ![demo_video](https://raw.githubusercontent.com/Eoin-McMahon/Blindfold/master/assets/demo.gif)
 
 ## 🔧 Examples of use:
-```console
-// generates a single gitignore file for both dart and flutter in ./src/.gitignore
-foo@bar:~$ blindfold --lang dart flutter
+```bash
+# generates a single gitignore file for both dart and flutter in ./src/.gitignore
+blindfold --lang dart flutter
 ```
 
-```console
-// you can specify a specific destination to store the gitignore file using the dest argument
-foo@bar:~$ blindfold --lang rust --dest ./src/
+```bash
+# you can specify a specific destination to store the gitignore file using the dest argument
+blindfold --lang rust --dest ./src/
 ```
 
-```console
-// arguments can also be written in shorthand
-foo@bar:~$ blindfold -l rust -d ./src/
+```bash
+# arguments can also be written in shorthand
+blindfold -l rust -d ./src/
 ```
 
-```console
-// shows full list of available templates
-foo@bar:~$ blindfold list
+```bash
+# shows full list of available templates
+blindfold list
 ```
 
-```console
-// There is a help screen that can be shown which details the subcommands and arguments to supply to the program
-foo@bar:~$ blindfold -h
+```bash
+# There is a help screen that can be shown which details the subcommands and arguments to supply to the program
+blindfold -h
 ```
