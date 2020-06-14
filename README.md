@@ -3,17 +3,19 @@
 <br>
 Logo courtesy of <a href="https://www.instagram.com/do.graphics/">Dominic Houston-Watt</a>
 </p>
-<h1 align="center"> Blindfold - a lightweight and simple .gitignore generator</h1>
+<!-- <h1 align="center"> Blindfold - a lightweight and simple .gitignore generator</h1> -->
 
-
-This project makes use of gitignore.io and provides a cli to generate gitignore templates for any language of your choosing!
+### Features
+* Pulls .gitignore templates from gitignore.io.
+* Clean and simple CLI
+* Suggestion system to help correct potential typos
+* Allows for the combination of any number of different templates all into one gitignore
 
 #### Demo:
 
 ![demo_video](./assets/demo.gif)
 
-
-#### Examples:
+#### Examples of use:
 ```console
 // generates a single gitignore file for both dart and flutter in ./src/.gitignore
 foo@bar:~$ blindfold --lang dart flutter
