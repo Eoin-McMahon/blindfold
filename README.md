@@ -1,5 +1,5 @@
 <p align="center">
-<img height="325" width="333" src="./assets/logo.png">
+<img height="325" width="333" src="./assets/banner.png">
 <br>
 Logo courtesy of <a href="https://www.instagram.com/do.graphics/">Dominic Houston-Watt</a>
 </p>
