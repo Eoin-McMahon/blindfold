@@ -1,15 +1,15 @@
 [package]
 name = "blindfold"
-version = "0.1.0"
+version = "1.0.4"
 authors = ["Eóin McMahon <eoin.mcmahon.dev@gmail.com>"]
 edition = "2018"
-description ="gitignore file generator written in rust"
+description ="⚙️ gitignore file generator written in rust"
 repo = "https://github.com/Eoin-McMahon/Blindfold"
 license="MIT"
 readme="README.md"
-license-file="license.txt"
-keywords=["gitignore", "git", "gitignore generator"]
-categories=["tool"]
+license-file="LICENSE"
+keywords=["gitignore", "git", "generator"]
+categories=["development-tools"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
