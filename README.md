@@ -1,5 +1,5 @@
 <p align="center">
-<img height="380" width="1920" src="./assets/banner.png">
+<img height="380" width="1920" src="https://github.com/Eoin-McMahon/Blindfold/blob/master/assets/banner.png">
 <br>
 Logo courtesy of <a href="https://www.instagram.com/do.graphics/">Dominic Houston-Watt</a>
 </p>
@@ -13,7 +13,7 @@ Logo courtesy of <a href="https://www.instagram.com/do.graphics/">Dominic Housto
 
 #### Demo:
 
-![demo_video](./assets/demo.gif)
+![demo_video](https://github.com/Eoin-McMahon/Blindfold/blob/master/assets/demo.gif)
 
 #### Examples of use:
 ```console
