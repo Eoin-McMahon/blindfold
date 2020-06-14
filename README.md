@@ -13,7 +13,7 @@ Logo courtesy of <a href="https://www.instagram.com/do.graphics/">Dominic Housto
 
 ## 📦 Installation
 NOTE: Rust must be installed on your system for this to work.
-It can be installed easily by running hte following command:
+It can be installed easily by running the following command:
 ```console
 foo@bar:~$ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
