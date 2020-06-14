@@ -1,6 +1,5 @@
 use clap::{Arg, App, SubCommand};
 use std::collections::HashMap;
-use std::ops::Not;
 use colored::*;
 mod lib;
 
@@ -33,12 +32,12 @@ fn main() -> std::io::Result<()> {
 
     // if passed list command, list and return
     if let Some(_) = matches.subcommand_matches("list") {
-        list_templates(file_map);
+        lib::list_templates(file_map);
         return Ok(());
     }
-    
+
     // if no arguments are supplied, exit
-    if matches.is_present("LANGUAGE(S)").not() {
+    if !matches.is_present("LANGUAGE(S)") {
         println!(" {}, nothing to write! ⚠️", "No language supplied as argument".red());
         return Ok(());
     }
@@ -46,19 +45,15 @@ fn main() -> std::io::Result<()> {
     // unwrap arguments and generate gitignore
     let destination: &str = matches.value_of("DESTINATION").unwrap_or("./");
     let languages: Vec<&str> = matches.values_of("LANGUAGE(S)").unwrap().collect();
-    
-    // find languages not in filemap return as vec, run similarity metric on each key 
+
+    // find languages not in filemap return as vec, run similarity metric on each key
     let gitignore: String = lib::generate_gitignore_file(languages, file_map);
 
     // write gitignore to file
     lib::write_file(destination, gitignore).expect("Couldn't write to file ⚠️ ");
-    
+
     return Ok(());
 }
 
-fn list_templates(file_map: HashMap<String, String>) {
-    for key in file_map.keys() {
-        print!("{} \t", key);
-    }
-}
+
 

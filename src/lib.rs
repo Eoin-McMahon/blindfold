@@ -6,6 +6,7 @@ use std::collections::HashMap;
 use colored::*;
 use reqwest;
 use serde::{Serialize, Deserialize};
+use prettytable::{Table, Row, Cell};
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct FileRes {
@@ -16,7 +17,9 @@ pub struct FileRes {
 // writes gitignore string to file
 pub fn write_file(dest: &str, gitignore: String) -> std::io::Result<()> {
     let filepath: PathBuf = Path::new(dest).join(".gitignore");
-    println!("Writing file to {}... ✏️", format!("{}.gitignore", dest).bright_blue().bold() );
+    println!("Writing file to {}... ✏️", format!("{}.gitignore", dest)
+             .bright_blue()
+             .bold());
     let mut file = File::create(filepath)?;
     file.write_all(gitignore.as_bytes())?;
     println!("{} ✨", "Done!".green().bold());
@@ -36,10 +39,8 @@ pub fn generate_gitignore_file(languages: Vec<&str>, file_map: HashMap<String, S
             let ignore_body: String = get_ignore_file(&file_map, language);
             gitignore.push_str(&format_gitignore(&ignore_body, language));
         }
-
         else {
             let most_similar: Option<String> = suggest_most_similar(language.clone(), file_map.clone());
-
             if let Some(language) = most_similar {
                 let ignore_body: String = get_ignore_file(&file_map, &language);
                 gitignore.push_str(&format_gitignore(&ignore_body, &language));
@@ -74,8 +75,8 @@ pub fn suggest_most_similar(typo: &str, file_map: HashMap<String, String>) -> Op
     println!("Couldn't generate template for {}, did you mean {}? [y/n]: ", typo.yellow().bold(), most_similar.bright_green().bold());
     let mut choice: String = String::new();
     stdin().read_line(&mut choice)
-            .ok()
-            .expect("Couldn't read line");
+        .ok()
+        .expect("Couldn't read line");
 
     if choice.to_lowercase() == String::from("y\n") {
         return Some(most_similar);
@@ -85,7 +86,7 @@ pub fn suggest_most_similar(typo: &str, file_map: HashMap<String, String>) -> Op
 }
 
 // builds a mapping of template names to urls to download them
-pub fn build_file_map(res: &str) -> HashMap<String, String> { 
+pub fn build_file_map(res: &str) -> HashMap<String, String> {
     // parse json response to extract name and download link into FileRes struct
     let all_files: Vec<FileRes> = serde_json::from_str(res).unwrap();
 
@@ -116,7 +117,6 @@ pub fn destructure_to_tup(file_struct: &FileRes) -> (String, String) {
         .clone()
         .replace(".gitignore", "")
         .to_lowercase();
-    
 
     let mut url:String = String::from("");
 
@@ -130,21 +130,50 @@ pub fn destructure_to_tup(file_struct: &FileRes) -> (String, String) {
 // performs a http GET request using the reqwest crate
 pub fn http_get(url: &str) -> String {
     let response = reqwest::get(url)
-        .expect("")
+        .expect("Error: Url Not Found")
         .text()
-        .expect("");
-
+        .expect("Error: Text unextractable from url");
+    
     return response;
 }
 
-// make http get request for the specified template and return it as a string
+// make http get request for the specified template and return the raw text of the gitignore as a string
 pub fn get_ignore_file(file_map: &HashMap<String, String>, lang: &str) -> String {
     let mut response: String = String::from("");
     let file_url: Option<&String> = file_map.get(lang);
-    
+
     if let Some(file) = file_url {
         response.push_str(&http_get(&file));
     }
 
     return response;
+}
+
+// print a table containing all available templates for generation
+pub fn list_templates(file_map: HashMap<String, String>) {
+    let mut table = Table::new();
+
+    let mut keys: Vec<String> = file_map
+        .keys()
+        .map(|key| key.clone())
+        .collect();
+
+    keys.sort();
+
+    let mut chunks = keys.chunks(4);
+
+    // while another row can be constructed, construct one and add to table
+    while let Some(chunk) = chunks.next() {
+        // map chunk items to cell
+        let cells = chunk 
+            .iter()
+            .map(|item| Cell::new(item))
+            .collect();
+
+        let row = Row::new(cells);
+        table.add_row(row);
+    }
+
+    // print table
+    table.printstd();
 }
