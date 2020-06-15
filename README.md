@@ -15,6 +15,7 @@ Logo courtesy of <a href="https://www.instagram.com/do.graphics/">Dominic Housto
 * Clean and simple CLI
 * Suggestion system to help correct potential typos
 * Allows for the combination of any number of different templates all into one gitignore
+* Allows for appending to pre-existing gitignore templates so that custom directories are not overridden.
 
 ## 📦 Installation
 NOTE: Rust must be installed on your system for this to work. (<a href="https://www.rust-lang.org/learn/get-started">Install Rust</a>)
@@ -41,6 +42,11 @@ This will install the binary and add it to your path. Once installed you can use
 ```bash
 # generates a single gitignore file for both dart and flutter in ./src/.gitignore
 blindfold --lang dart flutter
+```
+
+```bash
+# use the append flag to add to the pre-existing gitignore file (can be shortened to -a)
+blindfold --append macos
 ```
 
 ```bash
