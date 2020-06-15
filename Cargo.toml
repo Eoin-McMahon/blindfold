@@ -5,7 +5,6 @@ authors = ["Eóin McMahon <eoin.mcmahon.dev@gmail.com>"]
 edition = "2018"
 description ="⚙️ gitignore file generator written in rust"
 repo = "https://github.com/Eoin-McMahon/Blindfold"
-license="MIT"
 readme="README.md"
 license-file="LICENSE"
 keywords=["gitignore", "git", "generator"]
