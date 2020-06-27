@@ -2,6 +2,8 @@ use clap::{Arg, App, SubCommand};
 use std::collections::HashMap;
 use colored::*;
 mod lib;
+#[cfg(test)]
+mod test;
 
 // API endpoint for the gitignore templates repository
 const API_URL: &str = "https://api.github.com/repos/toptal/gitignore/contents/templates?ref=master";
