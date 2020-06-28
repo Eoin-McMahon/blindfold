@@ -1,6 +1,6 @@
-use clap::{Arg, App, SubCommand};
-use std::collections::HashMap;
+use clap::{App, Arg, SubCommand};
 use colored::*;
+use std::collections::HashMap;
 mod lib;
 #[cfg(test)]
 mod test;
@@ -45,23 +45,20 @@ fn main() -> std::io::Result<()> {
     if let Some(_) = matches.subcommand_matches("list") {
         lib::list_templates(file_map);
         return Ok(());
-    }
-
-    else if matches.is_present("LANGUAGE(S)") {
+    } else if matches.is_present("LANGUAGE(S)") {
         let languages: Vec<&str> = matches.values_of("LANGUAGE(S)").unwrap().collect();
         let gitignore: String = lib::generate_gitignore_file(languages, &file_map);
         // write gitignore to file
-        
+
         if !gitignore.is_empty() {
             lib::write_to_file(destination, gitignore).expect("Couldn't write to file ⚠️ ");
             return Ok(());
         }
-    }
-    
-    else if matches.is_present("APPEND LANGUAGE(S)") {
-        let additional_languages: Vec<&str> = matches.values_of("APPEND LANGUAGE(S)").unwrap().collect();
+    } else if matches.is_present("APPEND LANGUAGE(S)") {
+        let additional_languages: Vec<&str> =
+            matches.values_of("APPEND LANGUAGE(S)").unwrap().collect();
         let gitignore: String = lib::generate_gitignore_file(additional_languages, &file_map);
-        
+
         if !gitignore.is_empty() {
             // append to existing gitignore to file
             lib::append_to_file(destination, gitignore).expect("Couldn't write to file ⚠️ ");
@@ -74,6 +71,3 @@ fn main() -> std::io::Result<()> {
 
     return Ok(());
 }
-
-
-
