@@ -48,20 +48,24 @@ mod test {
         map.insert(String::from("rust"), String::from("rust gitignore url"));
         map.insert(String::from("c++"), String::from("c++ gitignore url"));
         let language = "roost";
+        let dissimilar_language = "this is not a language, but should still give a suggestion";
 
-        // this function takes a y/n from standard input, so need to pass this as input to the
-        // function
+        // function takes a y/n from standard input, so need to pass this as input to the function
         let yes_input = b"y";
         let no_input = b"n";
-       
+      
+        // not testing std out so can just pass empty vec
         let mut output = Vec::new();
         let yes_answer = blindfold::suggest_most_similar(&yes_input[..], &mut output, &language, map.clone());
-        let no_answer = blindfold::suggest_most_similar(&no_input[..], &mut output, &language, map);
+        let no_answer = blindfold::suggest_most_similar(&no_input[..], &mut output, &language, map.clone());
+        let yes_answer_dissimilar = blindfold::suggest_most_similar(&yes_input[..], &mut output, &dissimilar_language, map.clone());
 
         // most similar should be rust
         assert_eq!(yes_answer, Some(String::from("rust")));
         // if not accepted the most similar should be `None`
         assert_eq!(no_answer, None);
+        // even if the typo is very different, it should still give a suggestion
+        assert_ne!(yes_answer_dissimilar, None);
 
     }
 }
