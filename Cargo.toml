@@ -1,6 +1,6 @@
 [package]
 name = "blindfold"
-version = "1.0.6"
+version = "1.0.7"
 authors = ["Eóin McMahon <eoin.mcmahon.dev@gmail.com>"]
 edition = "2018"
 description ="⚙️ gitignore file generator written in rust"
