@@ -27,14 +27,17 @@ pub fn write_to_file(dest: &str, gitignore: String) -> std::io::Result<()> {
     Ok(())
 }
 
-// TODO clean up the suggestion code
 // returns gitignore string for each language provided
 pub fn generate_gitignore_file(languages: Vec<&str>, file_map: &HashMap<String, String>) -> String {
     // string to store all the gitignores
-    let mut gitignore: String = String::new();
+    let mut gitignore: String = String::from("");
 
     // generate gitignore for each language and append to output string
     for language in languages.iter() {
+        // make sure a language is added
+        if language == &"" {
+            continue;
+        }
         if file_map.contains_key(&language.to_string()) {
             let ignore_body: String = get_ignore_file(&file_map, language);
             gitignore.push_str(&format_gitignore(&ignore_body, language));
