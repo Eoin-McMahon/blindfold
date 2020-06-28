@@ -43,7 +43,11 @@ pub fn generate_gitignore_file(languages: Vec<&str>, file_map: &HashMap<String, 
             gitignore.push_str(&format_gitignore(&ignore_body, language));
         }
         else {
-            let most_similar: Option<String> = suggest_most_similar(language.clone(), file_map.clone());
+            let stdio = stdin();
+            let input = stdio.lock();
+            let output = stdout();
+
+            let most_similar: Option<String> = suggest_most_similar(input, output, language.clone(), file_map.clone());
             if let Some(language) = most_similar {
                 let ignore_body: String = get_ignore_file(&file_map, &language);
                 gitignore.push_str(&format_gitignore(&ignore_body, &language));
@@ -82,7 +86,11 @@ fn format_gitignore(body : &String, language: &str) -> String {
 }
 
 // given a mis-typed language this function returns the most similar language available
-pub fn suggest_most_similar(typo: &str, file_map: HashMap<String, String>) -> Option<String> {
+pub fn suggest_most_similar<R, W>(mut reader: R, mut writer: W, typo: &str, file_map: HashMap<String, String>)-> Option<String> 
+where 
+    R: BufRead,
+    W: Write,
+{
     // find language most similar to what was requested
     let mut max: f64 = 0.0;
     let mut most_similar: String = String::new();
@@ -96,13 +104,16 @@ pub fn suggest_most_similar(typo: &str, file_map: HashMap<String, String>) -> Op
     }
 
     // take input to accept/deny suggestion
-    println!("Couldn't generate template for {}, did you mean {}? [y/N]: ", typo.yellow().bold(), most_similar.bright_green().bold());
+    write!(&mut writer, "Couldn't generate template for {}, did you mean {}? [y/N]: ", typo.yellow().bold(), most_similar.bright_green().bold()).expect("Unable to write");
+    // flush input buffer so that it prints immediately
+    stdout().flush().ok();
+
     let mut choice: String = String::new();
-    stdin().read_line(&mut choice)
+    reader.read_line(&mut choice)
         .ok()
         .expect("Couldn't read line");
 
-    if choice.to_lowercase() == String::from("y\n") {
+    if choice.to_lowercase().trim() == String::from("y") {
         return Some(most_similar);
     }
 

@@ -40,27 +40,28 @@ mod test {
         // non existent language should return an empty string
         assert_eq!(blindfold::get_ignore_file(&map, ""), "");
     } 
+    
+    #[test]
+    fn suggest_most_similar() {
+        // setup
+        let mut map: HashMap<String, String> = HashMap::new(); 
+        map.insert(String::from("rust"), String::from("rust gitignore url"));
+        map.insert(String::from("c++"), String::from("c++ gitignore url"));
+        let language = "roost";
 
-    //fn serializing_the_response() {
-        // test an invalid json with serde
-        // test valid json 
-        //
-        // test the creation of the filemap
-        // are all other files correctly ignored?
-    //}
+        // this function takes a y/n from standard input, so need to pass this as input to the
+        // function
+        let yes_input = b"y";
+        let no_input = b"n";
+       
+        let mut output = Vec::new();
+        let yes_answer = blindfold::suggest_most_similar(&yes_input[..], &mut output, &language, map.clone());
+        let no_answer = blindfold::suggest_most_similar(&no_input[..], &mut output, &language, map);
 
-    //fn creating_the_file() {
-        // test the title maker function with another language (maybe chinese to demonstrate uni
-        // code)
-        // 
-    //}
+        // most similar should be rust
+        assert_eq!(yes_answer, Some(String::from("rust")));
+        // if not accepted the most similar should be `None`
+        assert_eq!(no_answer, None);
 
-    //fn interface() {
-       // test the similarity function
-       // make sure it always gives a suggestion even with random characters
-       // test with numbers
-       // test with only one letter difference
-       // make sure if a suggestion is denied, that nothing for it is included in the gitignore
-    //}
-
+    }
 }
