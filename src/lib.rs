@@ -133,8 +133,8 @@ pub fn generate_gitignore_file(languages: Vec<&str>, file_map: &HashMap<String, 
 
     // generate gitignore for each language and append to output string
     for path_and_language in languages.iter() {
-        // split the path and language into their constituent paths, with path being empty if the
-        // language name doesn't contain a '/'
+        // Split the path and language, with path being None if the language name doesn't contain a 
+        // '/'
         let last_slash_index = path_and_language.rfind('/');
         let language = &path_and_language[last_slash_index.map_or(0, |x| x + 1)..];
         let prefix_path = last_slash_index.map(|i| Path::new(&path_and_language[..i + 1]));
