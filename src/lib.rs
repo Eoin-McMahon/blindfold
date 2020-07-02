@@ -187,7 +187,7 @@ pub fn append_to_file(destination: &str, gitignore: String) -> std::io::Result<(
     let filepath: PathBuf = Path::new(destination).join(".gitignore");
 
     // open existing gitignore and concatenate with new template
-    let mut file = File::open(filepath)?;
+    let mut file = File::open(&filepath)?;
     let mut existing: String = String::new();
     file.read_to_string(&mut existing)?;
     let combined: String = format!("{}{}", existing, gitignore);
@@ -195,7 +195,7 @@ pub fn append_to_file(destination: &str, gitignore: String) -> std::io::Result<(
     if !combined.is_empty() {
         println!(
             "Loaded existing gitignore file from {} 💾",
-            format!("{}.gitignore", destination).bright_blue().bold()
+            filepath.to_str().expect("Unknown file path.").bright_blue().bold()
         );
 
         // write it to file
