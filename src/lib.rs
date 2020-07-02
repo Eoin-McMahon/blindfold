@@ -111,8 +111,6 @@ fn format_gitignore(raw_body: &String, prefix_path: Option<&Path>, language: &st
 
         // Remove the newline at the end of the body
         assert_eq!(body.pop(), Some('\n'));
-
-        println!("{}", body);
     } else {
         // The prefix path is None, so we can just copy the body as-is
         body.push_str(raw_body);
