@@ -199,7 +199,7 @@ pub fn append_to_file(destination: &str, gitignore: String) -> std::io::Result<(
         );
 
         // write it to file
-        write_to_file(destination, combined).expect("Could'nt write to file ⚠️ ");
+        write_to_file(destination, combined).expect("Couldn't write to file ⚠️ ");
     }
 
     return Ok(());
