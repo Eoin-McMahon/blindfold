@@ -80,12 +80,13 @@ pub fn get_raw_ignore_file(file_map: &HashMap<String, String>, lang: &str) -> St
 // Add title for each raw gitignore and add prefix paths to all non-comment lines
 fn format_gitignore(raw_body: &String, prefix_path: Option<&Path>, language: &str) -> String {
     let mut body = String::with_capacity(raw_body.len() * 2);
-        
+
     if let Some(path) = prefix_path {
         for line in raw_body.lines() {
             // Check if the line is a comment or empty by consuming all the whitespace and then checking
             // if the next character is a hash
-            let first_non_whitespace_char = line.chars().skip_while(|c| c.is_ascii_whitespace()).next();
+            let first_non_whitespace_char =
+                line.chars().skip_while(|c| c.is_ascii_whitespace()).next();
             if first_non_whitespace_char == Some('#') || first_non_whitespace_char == None {
                 body.push_str(line);
             } else {
@@ -98,7 +99,11 @@ fn format_gitignore(raw_body: &String, prefix_path: Option<&Path>, language: &st
                     line.to_string()
                 };
 
-                body.push_str(path.join(Path::new(&corrected_line)).to_str().expect("Unknown path found in gitignore."));
+                body.push_str(
+                    path.join(Path::new(&corrected_line))
+                        .to_str()
+                        .expect("Unknown path found in gitignore."),
+                );
             }
 
             body.push('\n');
@@ -108,7 +113,8 @@ fn format_gitignore(raw_body: &String, prefix_path: Option<&Path>, language: &st
         assert_eq!(body.pop(), Some('\n'));
 
         println!("{}", body);
-    } else { // The prefix path is None, so we can just copy the body as-is
+    } else {
+        // The prefix path is None, so we can just copy the body as-is
         body.push_str(raw_body);
     }
 
