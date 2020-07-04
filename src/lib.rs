@@ -172,8 +172,8 @@ where
 pub fn write_to_file(dest: &str, gitignore: String) -> std::io::Result<()> {
     let filepath: PathBuf = Path::new(dest).join(".gitignore");
     println!(
-        "Writing file to {}... ✏️",
-        format!("{}.gitignore", dest).bright_blue().bold()
+        "Writing file to {}... ✏️ ",
+        filepath.to_str().expect("Unknown output file name.").bright_blue().bold()
     );
     let mut file = File::create(filepath)?;
     file.write_all(gitignore.as_bytes())?;
@@ -187,7 +187,7 @@ pub fn append_to_file(destination: &str, gitignore: String) -> std::io::Result<(
     let filepath: PathBuf = Path::new(destination).join(".gitignore");
 
     // open existing gitignore and concatenate with new template
-    let mut file = File::open(filepath)?;
+    let mut file = File::open(&filepath)?;
     let mut existing: String = String::new();
     file.read_to_string(&mut existing)?;
     let combined: String = format!("{}{}", existing, gitignore);
@@ -195,11 +195,11 @@ pub fn append_to_file(destination: &str, gitignore: String) -> std::io::Result<(
     if !combined.is_empty() {
         println!(
             "Loaded existing gitignore file from {} 💾",
-            format!("{}.gitignore", destination).bright_blue().bold()
+            filepath.to_str().expect("Unknown file path.").bright_blue().bold()
         );
 
         // write it to file
-        write_to_file(destination, combined).expect("Could'nt write to file ⚠️ ");
+        write_to_file(destination, combined).expect("Couldn't write to file ⚠️ ");
     }
 
     return Ok(());
