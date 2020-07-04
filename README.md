@@ -16,6 +16,7 @@ Logo courtesy of <a href="https://www.instagram.com/do.graphics/">Dominic Housto
 * Suggestion system to help correct potential typos
 * Allows for the combination of any number of different templates all into one gitignore
 * Allows for appending to pre-existing gitignore templates so that custom directories are not overridden.
+* Allows for hosting languages inside directories, so that multiple languages can be neatly split up.
 
 ## 📦 Installation
 NOTE: Rust must be installed on your system for this to work. (<a href="https://www.rust-lang.org/learn/get-started">Install Rust</a>)
@@ -52,6 +53,11 @@ blindfold --append macos
 ```bash
 # you can specify a specific destination to store the gitignore file using the dest argument
 blindfold --lang rust --dest ./src/
+```
+
+```bash
+# you can put languages into directories by prefixing the language name with the path (which can include '**')
+blindfold --lang rs/rust py/python **/make
 ```
 
 ```bash
