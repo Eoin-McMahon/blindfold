@@ -102,7 +102,7 @@ fn format_gitignore(raw_body: &String, prefix_path: Option<&Path>, language: &st
                 body.push_str(
                     path.join(Path::new(&corrected_line))
                         .to_str()
-                        .expect("Unknown path found in gitignore."),
+                        .expect("Bad path found in gitignore."),
                 );
             }
 
