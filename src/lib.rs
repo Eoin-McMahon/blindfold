@@ -133,7 +133,7 @@ pub fn generate_gitignore_file(languages: Vec<&str>, file_map: &HashMap<String, 
 
     // generate gitignore for each language and append to output string
     for path_and_language in languages.iter() {
-        // Split the path and language, with path being None if the language name doesn't contain a 
+        // Split the path and language, with path being None if the language name doesn't contain a
         // '/'
         let last_slash_index = path_and_language.rfind('/');
         let language = &path_and_language[last_slash_index.map_or(0, |x| x + 1)..];
@@ -217,7 +217,11 @@ pub fn write_to_file(dest: &str, gitignore: String) -> std::io::Result<()> {
     let filepath: PathBuf = Path::new(dest).join(".gitignore");
     println!(
         "Writing file to {}... ✏️ ",
-        filepath.to_str().expect("Unknown output file name.").bright_blue().bold()
+        filepath
+            .to_str()
+            .expect("Unknown output file name.")
+            .bright_blue()
+            .bold()
     );
     let mut file = File::create(filepath)?;
     file.write_all(gitignore.as_bytes())?;
@@ -239,7 +243,11 @@ pub fn append_to_file(destination: &str, gitignore: String) -> std::io::Result<(
     if !combined.is_empty() {
         println!(
             "Loaded existing gitignore file from {} 💾",
-            filepath.to_str().expect("Unknown file path.").bright_blue().bold()
+            filepath
+                .to_str()
+                .expect("Unknown file path.")
+                .bright_blue()
+                .bold()
         );
 
         // write it to file
