@@ -87,16 +87,29 @@ fn format_gitignore(raw_body: &String, prefix_path: Option<&Path>, language: &st
             // if the next character is a hash
             let first_non_whitespace_char =
                 line.chars().skip_while(|c| c.is_ascii_whitespace()).next();
+
             if first_non_whitespace_char == Some('#') || first_non_whitespace_char == None {
+                // If the line is a comment or blank then add it to the file untouched
                 body.push_str(line);
             } else {
+                // Trim the '!' off the input line (if it exists) and add it to the start of the
+                // output line
+                let trimmed_line = if first_non_whitespace_char == Some('!') {
+                    // The line is an exclusion, so remove the '!' from the start of the path and
+                    // add it to the output string
+                    body.push('!');
+                    &line[1..]
+                } else {
+                    line
+                };
+
                 // A lot of gitignores seem to have erroneous '/'s at the start of their paths, but
                 // rust is not magic so it can't figure out which ones are actually correct so this
                 // will just remove them all
-                let corrected_line = if line.chars().next() == Some('/') {
-                    line.chars().skip(1).collect::<String>()
+                let corrected_line = if trimmed_line.chars().next() == Some('/') {
+                    trimmed_line.chars().skip(1).collect::<String>()
                 } else {
-                    line.to_string()
+                    trimmed_line.to_string()
                 };
 
                 body.push_str(
