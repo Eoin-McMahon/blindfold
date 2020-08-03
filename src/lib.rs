@@ -6,7 +6,10 @@ use std::collections::HashMap;
 use std::fs::File;
 use std::io::*;
 use std::path::{Path, PathBuf};
+use itertools::Itertools;
 use strsim::normalized_levenshtein;
+
+static GLOBSTAR: &str = "**";
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct FileRes {
@@ -77,6 +80,20 @@ pub fn get_raw_ignore_file(file_map: &HashMap<String, String>, lang: &str) -> St
     return response;
 }
 
+// Coalesces consecutives globstars into a single globstar
+pub fn reduce_globstars(path: &str) -> String {
+    let path_parts = path.split("/");
+    let coalesced_parts = path_parts.coalesce(|x, y| {
+        if x == GLOBSTAR && y == GLOBSTAR {
+            Ok(GLOBSTAR)
+        } else {
+            Err((x, y))
+        }
+    });
+
+     return coalesced_parts.collect::<Vec<&str>>().join("/");
+}
+
 // Add title for each raw gitignore and add prefix paths to all non-comment lines
 fn format_gitignore(raw_body: &String, prefix_path: Option<&Path>, language: &str) -> String {
     let mut body = String::with_capacity(raw_body.len() * 2);
@@ -99,15 +116,14 @@ fn format_gitignore(raw_body: &String, prefix_path: Option<&Path>, language: &st
                     line.to_string()
                 };
 
-                let mut corrected_line_path = Path::new(&corrected_line);
-                while path.ends_with("**/") && corrected_line_path.starts_with("**/") {
-                    corrected_line_path = corrected_line_path
-                        .strip_prefix("**/")
-                        .expect("This shouldn't fail because we check if '**/' exists first");
-                }
+                let prefixed_path = path.join(Path::new(&corrected_line));
+                let prefixed_path_str = prefixed_path.to_str().expect("Path is not valid unicode");
+                let final_path_str = &reduce_globstars(prefixed_path_str);
+                let final_path = Path::new(final_path_str);
+
 
                 body.push_str(
-                    path.join(corrected_line_path)
+                    final_path
                         .to_str()
                         .expect("Unknown path found in gitignore."),
                 );

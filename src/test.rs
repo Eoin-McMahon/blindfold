@@ -13,6 +13,18 @@ mod test {
     }
 
     #[test]
+    fn coalesece_globstars() {
+        let path = "alt/**/**/stuff/altium";
+        assert_eq!(crate::lib::reduce_globstars(path), "alt/**/stuff/altium");
+
+        let path = "py/projects/**/**/python";
+        assert_eq!(crate::lib::reduce_globstars(path), "py/projects/**/python");
+
+        let path = "test/**/test/**/**/test";
+        assert_eq!(crate::lib::reduce_globstars(path), "test/**/test/**/test");
+    }
+
+    #[test]
     fn generate_gitignore_file() {
         // setup
         let mut map: HashMap<String, String> = HashMap::new(); 
