@@ -20,13 +20,14 @@ mod test {
     #[test]
     fn coalesece_globstars() {
 
-        let path_reduction_map: HashMap<&str, &str> = [
+        let path_reduction_map = &[
             ("test/test", "test/test"),
             ("test/**/test", "test/**/test"),
             ("test/**/**/test", "test/**/test"),
             ("test/**/**/**/test", "test/**/test"),
             ("test/**/test/**/test", "test/**/test/**/test")
-        ].iter().cloned().collect();
+        ];
+
 
         for (path, correct_reduction) in path_reduction_map {
             let reduction = crate::lib::reduce_globstars(path);
