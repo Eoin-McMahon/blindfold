@@ -15,7 +15,7 @@ impl<Client: GitIgnoreClient> GitIgnoreService<Client> {
     }
 
     pub async fn get_gitignore_contents(&self, languages: &[&str]) -> Option<Vec<String>> {
-        let gitignore_contents = self.client.fetch_gitinore_contents(&languages).await?;
+        let gitignore_contents = self.client.fetch_gitinore_contents(languages).await?;
         Some(gitignore_contents)
     }
 }

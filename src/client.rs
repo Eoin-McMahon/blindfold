@@ -13,10 +13,10 @@ pub struct GitIgnoreIOClient {
 }
 
 impl GitIgnoreIOClient {
-    pub fn new(base_url: &str) -> Self {
+    pub fn new(base_url: &str, client: Client) -> Self {
         Self {
             base_url: base_url.to_string(),
-            client: Client::new(),
+            client,
         }
     }
 }
@@ -34,8 +34,15 @@ impl GitIgnoreClient for GitIgnoreIOClient {
     /// cannot be parsed.
     async fn list_templates(&self) -> Option<Vec<String>> {
         let url = format!("{}list", self.base_url);
-        let response = self.client.get(&url).send().await.ok()?.text().await.ok()?;
-        let templates = response
+        let response = self.client.get(&url).send().await.ok()?;
+
+        if !response.status().is_success() {
+            return None;
+        }
+
+        let text = response.text().await.ok()?;
+
+        let templates = text
             .lines()
             .flat_map(|line| line.split(',').map(|s| s.trim().to_string()))
             .collect::<Vec<String>>();
@@ -58,9 +65,15 @@ impl GitIgnoreClient for GitIgnoreIOClient {
     /// cannot be parsed.
     async fn fetch_gitinore_contents(&self, languages: &[&str]) -> Option<Vec<String>> {
         let url = format!("{}{}", self.base_url, languages.join(","));
-        let response = self.client.get(&url).send().await.ok()?.text().await.ok()?;
+        let response = self.client.get(&url).send().await.ok()?;
 
-        let templates = response
+        if !response.status().is_success() {
+            return None;
+        }
+
+        let text = response.text().await.ok()?;
+
+        let templates = text
             .lines()
             .map(|line| line.to_string())
             .collect::<Vec<String>>();

@@ -1,20 +1,21 @@
+use io::Result as IOResult;
 use std::{
     fs::OpenOptions,
-    io::{self, ErrorKind, Write},
+    io::{self, Write},
     path::Path,
 };
-use term_size;
 
 pub struct TemplateOutput;
 
 impl TemplateOutput {
-    pub fn write_list(&self, templates: Vec<String>) {
+    pub fn write_list<T: Write>(&self, templates: Vec<String>, mut writer: T) -> IOResult<()> {
         for template in templates {
-            println!("{}", template);
+            writeln!(writer, "{}", template)?;
         }
+        Ok(())
     }
 
-    pub fn write_table(&self, templates: Vec<String>) {
+    pub fn write_table<T: Write>(&self, templates: Vec<String>, mut writer: T) -> IOResult<()> {
         let col_width = 20;
 
         // Get terminal width or default to 80 columns
@@ -29,19 +30,21 @@ impl TemplateOutput {
                 .map(|s| format!("{:<width$}", s, width = col_width))
                 .collect::<Vec<_>>()
                 .join("");
-            println!("{}", line);
+
+            writeln!(writer, "{}", line)?;
         }
+        Ok(())
     }
 }
 
 pub trait Output {
-    fn write(&self, contents: Vec<String>, append: bool, output_path: &Path) -> io::Result<()>;
+    fn write(&self, contents: Vec<String>, append: bool, output_path: &Path) -> IOResult<()>;
 }
 
 pub struct FileOutput;
 
 impl Output for FileOutput {
-    fn write(&self, contents: Vec<String>, append: bool, output_path: &Path) -> io::Result<()> {
+    fn write(&self, contents: Vec<String>, append: bool, output_path: &Path) -> IOResult<()> {
         let mut file = match append {
             false => OpenOptions::new()
                 .write(true)
@@ -49,23 +52,7 @@ impl Output for FileOutput {
                 .truncate(true)
                 .open(output_path)?,
 
-            true => OpenOptions::new()
-                .write(true)
-                .append(true)
-                .open(output_path)
-                .map_err(|e| {
-                    if e.kind() == ErrorKind::NotFound {
-                        io::Error::new(
-                            ErrorKind::NotFound,
-                            format!(
-                                "Unable to append to '{}' as it was not found",
-                                output_path.display()
-                            ),
-                        )
-                    } else {
-                        e
-                    }
-                })?,
+            true => OpenOptions::new().append(true).open(output_path)?,
         };
 
         for line in contents {

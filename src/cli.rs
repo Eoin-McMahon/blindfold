@@ -13,7 +13,7 @@ pub struct Cli {
     pub command: Commands,
 }
 
-#[derive(Debug, Clone, ValueEnum)]
+#[derive(Debug, Clone, PartialEq, ValueEnum)]
 pub enum FormatOption {
     Plain,
     Table,

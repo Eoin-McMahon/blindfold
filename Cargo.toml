@@ -3,11 +3,11 @@ name = "blindfold"
 version = "1.0.7"
 authors = ["Eóin McMahon <eoin.mcmahon.dev@gmail.com>"]
 edition = "2018"
-description ="⚙️ gitignore file generator written in rust"
+description ="gitignore file generator written in rust"
 repository = "https://github.com/Eoin-McMahon/blindfold"
 readme="README.md"
 license-file="LICENSE"
-keywords=["gitignore", "git", "generator"]
+keywords=["gitignore", "git", "generator", "cli"]
 categories=["development-tools"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -19,3 +19,7 @@ term_size  = { version = "0.3.2"}
 
 reqwest = { version = "0.12.20", features = ["json", "rustls-tls"] }
 async-trait = "0.1" 
+
+[dev-dependencies]
+httpmock = "0.6"
+tempfile = "3.20.0"
