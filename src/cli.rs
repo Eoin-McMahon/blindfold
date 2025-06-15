@@ -23,7 +23,7 @@ pub enum FormatOption {
 pub enum Commands {
     /// List available templates
     List {
-        #[arg(short, long, default_value = "plain")]
+        #[arg(short, long, default_value = "table")]
         format: FormatOption,
     },
 

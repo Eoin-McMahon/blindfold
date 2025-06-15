@@ -5,7 +5,10 @@ mod output;
 mod service;
 use reqwest::Client as HTTPClient;
 
-use std::{io::stdout, path::PathBuf};
+use std::{
+    io::{stdout, Write},
+    path::PathBuf,
+};
 
 use client::GitIgnoreIOClient;
 use service::GitIgnoreService;
@@ -26,21 +29,21 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let client = GitIgnoreIOClient::new(API_URL, HTTPClient::new());
     let gitignore_service = GitIgnoreService::new(client);
 
+    // Write output to stdout
+    let stdout = stdout();
+    let mut handle = stdout.lock();
+
     match args.command {
         Commands::List { format } => {
             if let Some(templates) = gitignore_service.list_templates().await {
                 let template_outputter = TemplateOutput;
-
-                // Write output to stdout
-                let stdout = stdout();
-                let handle = stdout.lock();
 
                 match format {
                     FormatOption::Plain => template_outputter.write_list(templates, handle)?,
                     FormatOption::Table => template_outputter.write_table(templates, handle)?,
                 }
             } else {
-                eprintln!("Error fetching available gitignore's");
+                writeln!(handle, "Error fetching available gitignore's")?;
             }
             return Ok(());
         }
@@ -56,15 +59,21 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             let gitignore_contents = match gitignore_service.get_gitignore_contents(&langs).await {
                 Some(gitignore) => gitignore,
                 None => {
-                    eprintln!("Error fetching gitignore contents");
+                    writeln!(handle, "Error fetching gitignore contents")?;
                     return Ok(());
                 }
             };
 
             if let Err(e) = file_outputter.write(gitignore_contents, append, &output_path) {
-                eprintln!("Failed to write gitignore contents: {}", e);
+                writeln!(handle, "Failed to write gitignore contents: {}", e)?;
             }
 
+            writeln!(
+                handle,
+                "Finished writing gitignore file for {} to {}!",
+                langs.join(", "),
+                output_path.display(),
+            )?;
             Ok(())
         }
     }
