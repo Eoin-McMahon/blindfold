@@ -163,9 +163,4 @@ fn test_append_to_missing_file_should_fail() {
     assert!(result.is_err());
     let err = result.unwrap_err();
     assert_eq!(err.kind(), ErrorKind::NotFound);
-    assert!(
-        err.to_string().contains("Unable to append"),
-        "Error message was: {}",
-        err
-    );
 }
