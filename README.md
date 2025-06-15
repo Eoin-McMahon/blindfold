@@ -13,10 +13,8 @@ Logo courtesy of <a href="https://www.instagram.com/do.graphics/">Dominic Housto
 ## ✨ Features
 * Pulls .gitignore templates from gitignore.io.
 * Clean and simple CLI
-* Suggestion system to help correct potential typos
 * Allows for the combination of any number of different templates all into one gitignore
 * Allows for appending to pre-existing gitignore templates so that custom directories are not overridden.
-* Allows for hosting languages inside directories, so that multiple languages can be neatly split up.
 
 ## 📦 Installation
 NOTE: Rust must be installed on your system for this to work. (<a href="https://www.rust-lang.org/learn/get-started">Install Rust</a>)
@@ -35,38 +33,30 @@ cargo install --path ./
 ```
 
 This will install the binary and add it to your path. Once installed you can use the tool as shown in the examples below.
-## 🔨 Demo:
-
-![demo_video](https://raw.githubusercontent.com/Eoin-McMahon/Blindfold/master/assets/demo.gif)
 
 ## 🔧 Examples of use:
 ```bash
 # generates a single gitignore file for both dart and flutter in ./src/.gitignore
-blindfold --lang dart flutter
+blindfold generate dart flutter -d ./src/
 ```
 
 ```bash
 # use the append flag to add to the pre-existing gitignore file (can be shortened to -a)
-blindfold --append macos
+blindfold generate macos --append
 ```
 
 ```bash
-# you can specify a specific destination to store the gitignore file using the dest argument
-blindfold --lang rust --dest ./src/
-```
-
-```bash
-# you can put languages into directories by prefixing the language name with the path (which can include '**')
-blindfold --lang rs/rust py/python **/make
+# you can specify a specific directory to store the gitignore file in using the dir argument
+blindfold generate rust --dir ./src/
 ```
 
 ```bash
 # arguments can also be written in shorthand
-blindfold -l rust -d ./src/
+blindfold generate rust -d ./src/ -a 
 ```
 
 ```bash
-# shows full list of available templates
+# shows full table list of available templates
 blindfold list
 ```
 

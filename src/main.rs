@@ -1,73 +1,82 @@
-use clap::{App, Arg, SubCommand};
-use colored::*;
-use std::collections::HashMap;
-mod lib;
-#[cfg(test)]
-mod test;
+mod cli;
+mod client;
+mod constants;
+mod output;
+mod service;
+use reqwest::Client as HTTPClient;
 
-// API endpoint for the gitignore templates repository
-const API_URL: &str = "https://api.github.com/repos/toptal/gitignore/contents/templates?ref=master";
+use std::{
+    io::{stdout, Write},
+    path::PathBuf,
+};
 
-fn main() -> std::io::Result<()> {
-    let matches = App::new("Blindfold")
-                    .version("1.0")
-                    .author("Eoin McMahon <eoin.mcmahon.dev@gmail.com>")
-                    .about("Grabs gitignore templates from gitignore.io")
-                    .arg(Arg::with_name("LANGUAGE(S)")
-                        .short("l")
-                        .long("lang")
-                        .takes_value(true)
-                        .multiple(true)
-                        .help("Template(s) to generate gitignore for i.e Rust, Flutter, VsCode etc. WARNING: this will override any current gitignore"))
-                    .arg(Arg::with_name("APPEND LANGUAGE(S)")
-                        .short("a")
-                        .long("append")
-                        .takes_value(true)
-                        .multiple(true)
-                        .help("Adds template(s) to pre-existing gitignore file_map"))
-                    .arg(Arg::with_name("DESTINATION")
-                        .short("d")
-                        .long("dest")
-                        .help("Destination to store the gitignore file in")
-                        .takes_value(true))
-                    .subcommand(SubCommand::with_name("list")
-                        .about("Lists all available gitignore templates"))
-                    .get_matches();
+use client::GitIgnoreIOClient;
+use service::GitIgnoreService;
 
-    // perform a get request to list the gitignore repository files
-    let repo_contents: String = lib::http_get(API_URL);
-    let file_map: HashMap<String, String> = lib::build_file_map(&repo_contents);
+use clap::Parser;
+use cli::{Cli, Commands};
+use constants::API_URL;
+use output::TemplateOutput;
 
-    // unwrap arguments and generate gitignore
-    let destination: &str = matches.value_of("DESTINATION").unwrap_or("./");
+use crate::{
+    cli::FormatOption,
+    output::{FileOutput, Output},
+};
 
-    // if passed list command, list and return
-    if let Some(_) = matches.subcommand_matches("list") {
-        lib::list_templates(file_map);
-        return Ok(());
-    } else if matches.is_present("LANGUAGE(S)") {
-        let languages: Vec<&str> = matches.values_of("LANGUAGE(S)").unwrap().collect();
-        let gitignore: String = lib::generate_gitignore_file(languages, &file_map);
-        // write gitignore to file
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let args = Cli::parse();
+    let client = GitIgnoreIOClient::new(API_URL, HTTPClient::new());
+    let gitignore_service = GitIgnoreService::new(client);
 
-        if !gitignore.is_empty() {
-            lib::write_to_file(destination, gitignore).expect("Couldn't write to file ⚠️ ");
+    // Write output to stdout
+    let stdout = stdout();
+    let mut handle = stdout.lock();
+
+    match args.command {
+        Commands::List { format } => {
+            if let Some(templates) = gitignore_service.list_templates().await {
+                let template_outputter = TemplateOutput;
+
+                match format {
+                    FormatOption::Plain => template_outputter.write_list(templates, handle)?,
+                    FormatOption::Table => template_outputter.write_table(templates, handle)?,
+                }
+            } else {
+                writeln!(handle, "Error fetching available gitignore's")?;
+            }
             return Ok(());
         }
-    } else if matches.is_present("APPEND LANGUAGE(S)") {
-        let additional_languages: Vec<&str> =
-            matches.values_of("APPEND LANGUAGE(S)").unwrap().collect();
-        let gitignore: String = lib::generate_gitignore_file(additional_languages, &file_map);
+        Commands::Generate {
+            languages,
+            directory,
+            append,
+        } => {
+            let langs: Vec<&str> = languages.iter().map(|s| s.as_str()).collect();
+            let mut output_path = PathBuf::from(directory);
+            output_path.push(".gitignore");
+            let file_outputter = FileOutput;
 
-        if !gitignore.is_empty() {
-            // append to existing gitignore to file
-            lib::append_to_file(destination, gitignore).expect("Couldn't write to file ⚠️ ");
-            return Ok(());
+            let gitignore_contents = match gitignore_service.get_gitignore_contents(&langs).await {
+                Some(gitignore) => gitignore,
+                None => {
+                    writeln!(handle, "Error fetching gitignore contents")?;
+                    return Ok(());
+                }
+            };
+
+            if let Err(e) = file_outputter.write(gitignore_contents, append, &output_path) {
+                writeln!(handle, "Failed to write gitignore contents: {}", e)?;
+                return Ok(());
+            }
+
+            writeln!(
+                handle,
+                "Finished writing gitignore file for {} to {}!",
+                langs.join(", "),
+                output_path.display(),
+            )?;
+            Ok(())
         }
     }
-
-    // if no arguments are supplied, exit
-    println!("{}, no gitignore to write! ⚠️", "Stopping".red());
-
-    return Ok(());
 }

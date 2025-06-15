@@ -1,24 +1,25 @@
 [package]
 name = "blindfold"
-version = "1.0.7"
+version = "1.1.0"
 authors = ["Eóin McMahon <eoin.mcmahon.dev@gmail.com>"]
 edition = "2018"
-description ="⚙️ gitignore file generator written in rust"
+description ="gitignore file generator written in rust"
 repository = "https://github.com/Eoin-McMahon/blindfold"
 readme="README.md"
 license-file="LICENSE"
-keywords=["gitignore", "git", "generator"]
+keywords=["gitignore", "git", "generator", "cli"]
 categories=["development-tools"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-reqwest = "0.9.0"                                       # http requests
-serde = {version = "1.0.111", features = ["derive"]}    # serialization
-serde_json = "1.0.53"                                   # serialize JSON 
-clap = "2.33.1"                                         # argument parsing
-colored = "1.9"                                         # color in terminal
-strsim = "0.10.0"                                       # string similarity metrics
-prettytable-rs = "^0.8"                                 # Print pretty tables for list subcommand
-itertools = "^0.8"                                      # Coalesce globstars
+clap = { version = "4.5.40", features = ["derive"] }
+tokio = { version = "1.45.1", features = ["full"] }
+term_size  = { version = "0.3.2"}
 
+reqwest = { version = "0.12.20", features = ["json", "rustls-tls"] }
+async-trait = "0.1" 
+
+[dev-dependencies]
+httpmock = "0.6"
+tempfile = "3.20.0"
