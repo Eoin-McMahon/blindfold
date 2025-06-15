@@ -49,11 +49,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
         Commands::Generate {
             languages,
-            destination,
+            directory,
             append,
         } => {
             let langs: Vec<&str> = languages.iter().map(|s| s.as_str()).collect();
-            let output_path = PathBuf::from(destination);
+            let mut output_path = PathBuf::from(directory);
+            output_path.push(".gitignore");
             let file_outputter = FileOutput;
 
             let gitignore_contents = match gitignore_service.get_gitignore_contents(&langs).await {
@@ -66,6 +67,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
             if let Err(e) = file_outputter.write(gitignore_contents, append, &output_path) {
                 writeln!(handle, "Failed to write gitignore contents: {}", e)?;
+                return Ok(());
             }
 
             writeln!(

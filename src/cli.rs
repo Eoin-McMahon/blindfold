@@ -32,8 +32,8 @@ pub enum Commands {
         #[arg(required = true)]
         languages: Vec<String>,
 
-        #[arg(short, long, default_value = ".gitignore")]
-        destination: String,
+        #[arg(short, long, default_value = ".")]
+        directory: String,
 
         #[arg(short, long)]
         append: bool,

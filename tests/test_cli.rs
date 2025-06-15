@@ -18,11 +18,11 @@ fn test_cli_parsing_generate() {
     match cli.command {
         cli::Commands::Generate {
             languages,
-            destination,
+            directory,
             append,
         } => {
             assert_eq!(languages, vec!["Rust", "Python"]);
-            assert_eq!(destination, "my_gitignore");
+            assert_eq!(directory, "my_gitignore");
             assert!(append);
         }
         _ => panic!("Expected Generate command"),
