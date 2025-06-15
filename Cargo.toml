@@ -21,5 +21,5 @@ reqwest = { version = "0.12.20", features = ["json", "rustls-tls"] }
 async-trait = "0.1" 
 
 [dev-dependencies]
-httpmock = "0.6"
+httpmock = "0.7"
 tempfile = "3.20.0"
