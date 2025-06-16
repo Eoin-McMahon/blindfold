@@ -2,7 +2,7 @@ use std::fs;
 use std::io::{Cursor, ErrorKind};
 use std::path::{Path, PathBuf};
 
-use blindfold::output::{FileOutput, Output, TemplateOutput};
+use blindfold::output::{FileOutput, Output};
 use tempfile::NamedTempFile;
 
 fn language_template_fixture() -> Vec<String> {
@@ -19,7 +19,7 @@ fn language_template_fixture() -> Vec<String> {
 fn test_template_write_list_outputs_lines() {
     let templates = language_template_fixture();
 
-    let output = TemplateOutput;
+    let output = FileOutput;
     let mut buffer = Cursor::new(Vec::new());
 
     output.write_list(templates.clone(), &mut buffer).unwrap();
@@ -36,7 +36,7 @@ fn test_template_write_list_outputs_lines() {
 fn test_template_write_list_outputs_lines_no_languages() {
     let templates = vec![];
 
-    let output = TemplateOutput;
+    let output = FileOutput;
     let mut buffer = Cursor::new(Vec::new());
 
     output.write_list(templates.clone(), &mut buffer).unwrap();
@@ -52,7 +52,7 @@ fn test_template_write_list_outputs_lines_no_languages() {
 fn test_template_write_table_outputs_columns() {
     let templates = language_template_fixture();
 
-    let output = TemplateOutput;
+    let output = FileOutput;
     let mut buffer = Cursor::new(Vec::new());
 
     output.write_table(templates.clone(), &mut buffer).unwrap();
@@ -74,7 +74,7 @@ fn test_template_write_table_outputs_columns() {
 fn test_template_write_table_outputs_columns_no_languages() {
     let templates = vec![];
 
-    let output = TemplateOutput;
+    let output = FileOutput;
     let mut buffer = Cursor::new(Vec::new());
 
     output.write_table(templates.clone(), &mut buffer).unwrap();
@@ -109,7 +109,9 @@ fn test_write_new_file() {
     let contents = fixture_sample_contents();
 
     let file_output = FileOutput;
-    file_output.write(contents.clone(), false, path).unwrap();
+    file_output
+        .write_gitignore(contents.clone(), false, path)
+        .unwrap();
 
     let result = read_lines(path);
     assert_eq!(result, contents);
@@ -125,8 +127,12 @@ fn test_overwrite_an_existing_file() {
     let second = vec!["start".into()];
 
     let file_output = FileOutput;
-    file_output.write(first.clone(), false, path).unwrap();
-    file_output.write(second.clone(), false, path).unwrap();
+    file_output
+        .write_gitignore(first.clone(), false, path)
+        .unwrap();
+    file_output
+        .write_gitignore(second.clone(), false, path)
+        .unwrap();
 
     let result = read_lines(path);
     assert_eq!(result, second);
@@ -143,9 +149,13 @@ fn test_append_to_existing_file() {
 
     let file_output = FileOutput;
     // First write
-    file_output.write(first.clone(), false, path).unwrap();
+    file_output
+        .write_gitignore(first.clone(), false, path)
+        .unwrap();
     // Then append
-    file_output.write(second.clone(), true, path).unwrap();
+    file_output
+        .write_gitignore(second.clone(), true, path)
+        .unwrap();
 
     let result = read_lines(path);
     let expected = [first, second].concat();
@@ -158,7 +168,7 @@ fn test_append_to_missing_file_should_fail() {
     let path = PathBuf::from("nonexistent_dir/file.txt");
 
     let file_output = FileOutput;
-    let result = file_output.write(fixture_sample_contents(), true, &path);
+    let result = file_output.write_gitignore(fixture_sample_contents(), true, &path);
 
     assert!(result.is_err());
     let err = result.unwrap_err();

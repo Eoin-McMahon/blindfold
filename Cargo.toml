@@ -13,12 +13,13 @@ categories=["development-tools"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+async-trait = "0.1" 
+colored = "3.0.0"
 clap = { version = "4.5.40", features = ["derive"] }
+strsim = "0.10"
 tokio = { version = "1.45.1", features = ["full"] }
 term_size  = { version = "0.3.2"}
-
 reqwest = { version = "0.12.20", features = ["json", "rustls-tls"] }
-async-trait = "0.1" 
 
 [dev-dependencies]
 httpmock = "0.7"
