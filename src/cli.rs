@@ -4,7 +4,7 @@ use clap::{Parser, Subcommand, ValueEnum};
 #[derive(Parser)]
 #[command(
     name = "Blindfold",
-    version = "1.0",
+    version = env!("CARGO_PKG_VERSION"),
     author = "Eoin McMahon",
     about = "Generator of .gitignore files using gitignore.io"
 )]
