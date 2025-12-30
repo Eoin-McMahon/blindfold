@@ -19,7 +19,7 @@ clap = { version = "4.5.40", features = ["derive"] }
 strsim = "0.11"
 tokio = { version = "1.45.1", features = ["full"] }
 term_size  = { version = "0.3.2"}
-reqwest = { version = "0.12.20", features = ["json", "rustls-tls"] }
+reqwest = { version = "0.13.0", features = ["json", "rustls-tls"] }
 
 [dev-dependencies]
 httpmock = "0.7"
